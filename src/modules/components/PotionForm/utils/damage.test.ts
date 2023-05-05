@@ -1,19 +1,9 @@
-import { getDamage, getAllCombinations, cleanEmptyPotions, calculateCombination } from "./damage";
+import { getDamage, cleanEmptyPotions, calculateCombination } from "./damage";
 import { potionTypes } from "../../../constants";
 import { PotionCounterState as PotionCounter } from "../../../state-managment/slices/potionCounter";
 
 
 describe("getDamage", () => {
-  // Initial state
-  const initialState = {
-    [potionTypes.RED]: 0,
-    [potionTypes.BLUE]: 0,
-    [potionTypes.GREEN]: 0,
-    [potionTypes.YELLOW]: 0,
-    [potionTypes.GRAY]: 0,
-  } as PotionCounter;
-
-
   it("should return damage case 1", () => {
     const potions = {
       [potionTypes.RED]: 2,
@@ -49,6 +39,18 @@ describe("getDamage", () => {
     expect(getDamage(potions)).toEqual([20, 20]);
   });
 
+  it("should return damage case 3 different order [2,1,1,2,2]", () => {
+    const potions = {
+      [potionTypes.RED]: 2,
+      [potionTypes.BLUE]: 1,
+      [potionTypes.GREEN]: 1,
+      [potionTypes.YELLOW]: 2,
+      [potionTypes.GRAY]: 2,
+    };
+
+    expect(getDamage(potions)).toEqual([20, 20]);
+  });
+
   it("should return damage with only 2 potions", () => {
     const potions = {
       [potionTypes.RED]: 1,
@@ -59,6 +61,18 @@ describe("getDamage", () => {
     };
 
     expect(getDamage(potions)).toEqual([3, 3]);
+  });
+
+  it("should return damage [25, 3, 3]", () => {
+    const potions = {
+      [potionTypes.RED]: 1,
+      [potionTypes.BLUE]: 3,
+      [potionTypes.GREEN]: 1,
+      [potionTypes.YELLOW]: 1,
+      [potionTypes.GRAY]: 1,
+    };
+
+    expect(getDamage(potions)).toEqual([25, 3, 3]);
   });
 
   it("should delete RED key value", () => {
