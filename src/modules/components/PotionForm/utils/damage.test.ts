@@ -75,6 +75,18 @@ describe("getDamage", () => {
     expect(getDamage(potions)).toEqual([25, 3, 3]);
   });
 
+  it("should return damage [3, 3, 3, 3, 3]", () => {
+    const potions = {
+      [potionTypes.RED]: 0,
+      [potionTypes.BLUE]: 5,
+      [potionTypes.GREEN]: 0,
+      [potionTypes.YELLOW]: 0,
+      [potionTypes.GRAY]: 0,
+    };
+
+    expect(getDamage(potions)).toEqual([3, 3, 3, 3, 3]);
+  });
+
   it("should delete RED key value", () => {
     const potions = {
       [potionTypes.RED]: 0,

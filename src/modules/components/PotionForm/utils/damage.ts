@@ -7,7 +7,6 @@ const getDamage = (potions: PotionCounter) => {
   const currentPotion  = sortPosionKeys(cleanPotions);
   const comb5 = calculateCombination(currentPotion, 5, []);
   const comb4 = calculateCombination(currentPotion, 4, []);
-  console.log(JSON.stringify({potions, comb5, comb4 , currentPotion }))
 
   const attacks5 = getAttacks(
     [...comb5.combinations, ...flatSinglePotion(comb5.currentPotion)]
@@ -27,8 +26,8 @@ const getDamage = (potions: PotionCounter) => {
 const flatSinglePotion = (potions: PotionCounter) => 
   Object.keys(potions)
     .reduce((potionsArr: any, potionKey: any) =>{
-      return  (potions[potionKey as potionTypes]  === 2 ? 
-        [...potionsArr, ...[{ dim: 1 }, { dim: 1 }]]: [...potionsArr, { dim: 1 }])
+      return  (potions[potionKey as potionTypes]  > 1 ? 
+        [...potionsArr, ...Array.from({ length: potions[potionKey as potionTypes] }, (_, index) => index).map(() => ({ dim: 1}))]: [...potionsArr, { dim: 1 }])
     }, [])
       
 
